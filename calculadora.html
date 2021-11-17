@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="estilos.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script >
+        function sumar(){
+            console.log('voy a sumar');
+            let numero1 = parseInt(document.getElementById('num1').value);
+            let numero2 = parseInt(document.getElementById('num2').value);
+            document.getElementById('result').innerHTML = numero1 +numero2;
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Calculadora</h1>
+    <form>
+        <br/><label>Resultado:</label><label id='result'></label>
+        <div class="form-group">
+            <label>Numero 1</label>
+            <input type="text" class="form-control" id="num1">
+        </div>
+        <div class="form-group">
+            <label>Numero 2</label>
+            <input type="text" class="form-control" id="num2">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="sumar()" >Sumar</button>
+        
+    </form>
+    <br />
+
+
+</body>
+
+</html>
+
+<!-- ...-div,p, a, li,ul,ol, table, input,form -->
