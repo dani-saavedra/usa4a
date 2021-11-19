@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
 }
@@ -11,7 +10,7 @@ body{
 .pagina > * { 
     border-radius: 4px;
     text-align: center;
-  }
+}
 .pagina{
     display: grid;
     gap: 5px;
@@ -53,9 +52,8 @@ body{
 @media(min-width:1024px) {
     .pagina{
         grid-template:
-            "header header" 100px
-            "nav article" auto
-            "footer footer" 40px
+            "header header header header header" 100px
+            "nav  article article article article" auto
+            "footer footer footer footer footer" 40px
     }
 }
-
