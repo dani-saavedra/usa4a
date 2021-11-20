@@ -3,34 +3,73 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-3.6.0.min.js"></script>
     <style>
         .form {
-            margin: auto;
-            width: 500px;
-            border: solid #5B6DCD 3px;
-            border-radius: 3px;
+            background-color: #fefefe;
+            margin: 5% auto;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+            border-radius: 5px;
+            width: 20%;
+        }
+
+        button:hover {
+            opacity: 0.8;
         }
 
         .personalizado {
             margin: 2em;
         }
 
-        .botoncito {
-            text-align: center;
+        .container {
+            padding: 16px;
+        }
+
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            width: 100%;
         }
     </style>
     <script>
+
         const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
         const regexPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#.,$%^&*]{5,16}$/;
+        function guardarInformacionCloud() {
+
+            let dataToSend = JSON.stringify(myData);
+
+        }
         const autenticar = () => {
             let email = document.getElementById('userEmail').value;
             let password = document.getElementById('userPassword').value;
             let regexPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#.,$%^&*]{5,16}$/;
             if (regexPassword.test(password) && regexEmail.test(email)) {
-                alert("Autentique");
+                let usuario = {
+                    usuario: email,
+                    clave: password
+                }
+                let dataToSend = JSON.stringify(usuario);
+                $.ajax({
+                    url: "http://localhost:8080/login",
+                    'type': "POST",
+                    'data': JSON.stringify(usuario),
+                    'dataType': 'json',
+                    'contentType': 'application/json',
+                    success: function () {
+                        //
+                    }
+                });
             } else {
+
                 alert("verifique los datos");
             }
         }
@@ -43,9 +82,9 @@
 
         const validarPassword = () => {
             let password = document.getElementById('userPassword').value;
-            if(regexPassword.test(password)){
+            if (regexPassword.test(password)) {
                 document.getElementById("boton").disabled = false;
-            }else{
+            } else {
                 document.getElementById("boton").disabled = true;
             }
         }
@@ -54,7 +93,7 @@
 
 <body>
     <div class="form">
-        <form id="formulario">
+        <div class="container">
             <div class="form-group personalizado">
                 <label>Usuario</label>
                 <input type="text" id="userEmail" class="form-control" onblur="validarEmail()">
@@ -64,10 +103,8 @@
                 <label>Clave</label>
                 <input type="text" id="userPassword" class="form-control" onkeypress="validarPassword()">
             </div>
-            <div class="botoncito">
-                <button id="boton" class="btn btn-primary" onclick="autenticar()" disabled>Autenticar</button>
-            </div>
-        </form>
+            <button id="boton" class="btn btn-primary" onclick="autenticar()">Autenticar</button>
+        </div>
     </div>
 </body>
 
