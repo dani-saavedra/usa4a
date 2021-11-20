@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form {
+            margin: auto;
+            width: 500px;
+            border: solid #5B6DCD 3px;
+            border-radius: 3px;
+        }
+
+        .personalizado {
+            margin: 2em;
+        }
+
+        .botoncito {
+            text-align: center;
+        }
+    </style>
+    <script>
+        const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+        const regexPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#.,$%^&*]{5,16}$/;
+        const autenticar = () => {
+            let email = document.getElementById('userEmail').value;
+            let password = document.getElementById('userPassword').value;
+            let regexPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#.,$%^&*]{5,16}$/;
+            if (regexPassword.test(password) && regexEmail.test(email)) {
+                alert("Autentique");
+            } else {
+                alert("verifique los datos");
+            }
+        }
+
+        const validarEmail = () => {
+            let email = document.getElementById('userEmail').value;
+            mensajeEmail = (regexEmail.test(email)) ? "" : "Verifique su email";
+            document.getElementById("mensaje").innerHTML = mensajeEmail;
+        }
+
+        const validarPassword = () => {
+            let password = document.getElementById('userPassword').value;
+            if(regexPassword.test(password)){
+                document.getElementById("boton").disabled = false;
+            }else{
+                document.getElementById("boton").disabled = true;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="form">
+        <form id="formulario">
+            <div class="form-group personalizado">
+                <label>Usuario</label>
+                <input type="text" id="userEmail" class="form-control" onblur="validarEmail()">
+                <span id="mensaje"></span>
+            </div>
+            <div class="form-group personalizado">
+                <label>Clave</label>
+                <input type="text" id="userPassword" class="form-control" onkeypress="validarPassword()">
+            </div>
+            <div class="botoncito">
+                <button id="boton" class="btn btn-primary" onclick="autenticar()" disabled>Autenticar</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

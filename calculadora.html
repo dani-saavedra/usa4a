@@ -14,9 +14,33 @@
             document.getElementById('result').innerHTML = numero1 +numero2;
         }
     </script>
+    <style type="text/css">
+
+        .content{
+            margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+           height: 400px;
+            width: 350px;
+            margin-top: auto;
+            margin-bottom: auto;
+            background: #f39c12;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="content">
     <h1>Calculadora</h1>
     <form>
         <br/><label>Resultado:</label><label id='result'></label>
@@ -31,6 +55,7 @@
         <button type="button" class="btn btn-primary" onclick="sumar()" >Sumar</button>
         
     </form>
+</div>
     <br />
 
 
