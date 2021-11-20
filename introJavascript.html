@@ -14,6 +14,12 @@
             document.getElementById('result').innerHTML = numero1 + numero2;
         }
         let lista;
+        let personaJhorman = {
+            nombre: "Jhorman",
+            apellido: "Ale",
+            edad: 25,
+            correo: "b@b.com"
+        }
         function addElements() {
             let cadena = "";
             for (i = 0; i < 10; i++) {
@@ -27,14 +33,9 @@
                 correo: "a@b.com"
             }
 
-            let personaJhorman = {
-                nombre: "Jhorman",
-                apellido: "Ale",
-                edad: 25,
-                correo: "b@b.com"
-            }
+
             let personaZulma = {
-                nombre: "Zulma",
+                nombre: null,
                 apellido: "Gomez",
                 edad: 28,
                 correo: "c@b.com"
@@ -60,7 +61,8 @@
                     break;
                 }
             }
-            console.log(objetoEncontradoSinPredicados)
+            //SOLUCIONAR ESTO
+            //            console.log(objetoEncontradoSinPredicados.nombre)
 
             //predicados
             let objetoEncontrado = lista.find(persona => persona.nombre === "Zulma");
@@ -78,15 +80,46 @@
             console.log(numero + numero)
             callback(numero);
         }
+
         function validarCorreo() {
             let nuevoCorreo = document.getElementById('correo').value;
             let encontro = lista.find(elemento => elemento.correo === nuevoCorreo);
             if (encontro) {
                 alert("Por favor no repita el email")
             } else {
-                alert("Gracias por agregar su email") 
+                alert("Gracias por agregar su email")
             }
         }
+        const nombre = "Jorge";
+        let edad = 30;
+        let direccion = "calle 1"
+        console.log("el nombre es " + nombre + " y la edad es " + edad + " y vive en " + direccion);
+        //Template String
+        console.log(`el nombre es ${nombre} y la edad es ${edad} y vive en ${direccion}`)
+
+
+        hacerAlgoConHoisting();
+        //Hoisting, permite invocar algo y posteriormente declararlo, porque la declaracion se ejecutarán primero
+        function hacerAlgoConHoisting() {
+            const nombre = "oscar"
+            console.log(`el nombre es ${nombre}`);
+        }
+
+        let correo;
+        if (personaJhorman.edad > 25) {
+            correo = 'Debe prestar servicio militar'
+        } else {
+            correo = 'Debe estudiar'
+        }
+        console.log(correo)
+
+        //Ahora con un if abreviado
+        let otroCorreo = (personaJhorman.edad > 25) ? 'Debe prestar servicio militar' : 'Debe estudiar'
+        console.log(otroCorreo)
+        personaJhorman = null
+        //evitar acceder con valores nulos a una propiedad null safety
+        console.log(personaJhorman?.nombre)
+
     </script>
 </head>
 
