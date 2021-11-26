@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <style>
+        .form {
+            background-color: #fefefe;
+            margin: 5% auto;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+            border-radius: 5px;
+            width: 20%;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .personalizado {
+            margin: 2em;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            width: 100%;
+        }
+    </style>
+    <script>
+        const guardarProducto = () => {
+            let nuevoProducto = {
+                referencia: document.getElementById("referencia").value,
+                marca: document.getElementById("marca").value,
+                disponibilidad: document.getElementById("disponibilidad").value,
+                precio: document.getElementById("precio").value,
+                cantidad: document.getElementById("cantidad").value
+            }
+            $.ajax({
+                url: "http://localhost:9090/producto/guardar",
+                'type': "POST",
+                'data': JSON.stringify(nuevoProducto),
+                'dataType': 'json',
+                'contentType': 'application/json',
+                success: function () {
+                    //
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="form">
+        <div class="container">
+            <div class="form-group">
+                <label>referencia</label>
+                <input type="text" id="referencia" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>marca</label>
+                <input type="text" id="marca" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>disponibilidad</label>
+                <select id="disponibilidad" class="form-control" >
+                    <option>SI</option>
+                    <option>NO</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>precio</label>
+                <input type="number" id="precio" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>cantidad</label>
+                <input type="number" id="cantidad" class="form-control" />
+            </div>
+            <button id="boton" class="btn btn-primary" onclick="guardarProducto()">Agregar nuevo producto</button>
+        </div>
+    </div>
+</body>
+
+</html>
