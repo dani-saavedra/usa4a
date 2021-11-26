@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login</title>
+    <title>Productos</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script src="js/jquery-3.6.0.min.js"></script>
     <style>
@@ -59,10 +59,32 @@
                 }
             });
         }
+
+        const traerProductos = () => {
+            $.ajax({
+                url: "http://localhost:9090/producto/all",
+                'dataType': 'json',
+                'contentType': 'application/json',
+                success: function (data) {
+                    let productos="";
+                    for (i = 0; i < data.length; i++) {
+                        let producto = `<tr>
+                            <td>${data[i].referencia}</td>
+                            <td>${data[i].marca}</td>
+                            <td>${data[i].disponibilidad}</td>
+                            <td>${data[i].precio}</td>
+                            <td>${data[i].cantidad}</td>
+                            </tr>`
+                            productos = productos + producto
+                    }
+                    document.getElementById("tablaProductos").innerHTML= productos
+                }
+            });
+        }
     </script>
 </head>
 
-<body>
+<body onload="traerProductos()">
     <div class="form">
         <div class="container">
             <div class="form-group">
@@ -75,7 +97,7 @@
             </div>
             <div class="form-group">
                 <label>disponibilidad</label>
-                <select id="disponibilidad" class="form-control" >
+                <select id="disponibilidad" class="form-control">
                     <option>SI</option>
                     <option>NO</option>
                 </select>
@@ -90,6 +112,21 @@
             </div>
             <button id="boton" class="btn btn-primary" onclick="guardarProducto()">Agregar nuevo producto</button>
         </div>
+    </div>
+
+    <div id="productos">
+        <table class="table">
+            <thead>
+                <th>Referencia</th>
+                <th>Marca</th>
+                <th>Disponibilidad</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+            </thead>
+            <tbody id="tablaProductos">
+
+            </tbody>
+        </table>
     </div>
 </body>
 
