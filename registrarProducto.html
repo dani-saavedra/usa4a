@@ -40,6 +40,7 @@
         }
     </style>
     <script>
+        let listaProductos, productoSeleccionado;
         const guardarProducto = () => {
             let nuevoProducto = {
                 referencia: document.getElementById("referencia").value,
@@ -59,25 +60,79 @@
                 }
             });
         }
-
-        const traerProductos = () => {
+        const eliminarProducto = () => {
+            //INVOCAR LA ELIMINACION POR REFERCIA....
             $.ajax({
-                url: "http://localhost:9090/producto/all",
+                url: 'http://localhost:9090/producto/eliminar',
+                dataType: 'json',
+                type: 'DELETE',
+                contentType: 'application/json',
+                data: JSON.stringify({ referencia: productoSeleccionado.referencia }),
+                success: () => {
+                    //alert("Producto eliminado")
+                    location.reload();
+                }
+            })
+
+        };
+        const seleccionarProducto = (referencia) => {
+            productoSeleccionado = listaProductos.find(p => p.referencia === referencia.toString())
+            console.log(productoSeleccionado);
+            //$("#botonAgregar").hide("slow", function () { })
+            $("#botonAgregar").hide()
+            $("#botonEliminar").show()
+            $("#botonActualizar").show()
+            //document.getElementById("referencia").value = productoSeleccionado.referencia;// opcion 1
+            $("#referencia").val(productoSeleccionado.referencia);// opcion 2
+            $("#cantidad").val(productoSeleccionado.cantidad)
+            $("#disponibilidad").val(productoSeleccionado.disponibilidad)
+            $("#marca").val(productoSeleccionado.marca)
+            $("#precio").val(productoSeleccionado.precio)
+        }
+
+        const actualizarProducto = () => {
+            //INVOCAR ACTUALIZAR
+            let nuevoProducto = {
+                referencia: $("#referencia").val(),
+                marca: $("#marca").val(),
+                disponibilidad: $("#disponibilidad").val(),
+                precio: $("#precio").val(),
+                cantidad: $("#cantidad").val()
+            }
+            $.ajax({
+                url: "http://localhost:9090/producto/actualizar",
+                'type': "PUT",
+                'data': JSON.stringify(nuevoProducto),
                 'dataType': 'json',
                 'contentType': 'application/json',
+                success: function () {
+                    location.reload();
+                }
+            });
+        }
+
+
+        const traerProductos = () => {
+            $("#botonEliminar").hide()
+            $("#botonActualizar").hide()
+            $.ajax({
+                url: "http://localhost:9090/producto/all",
+                dataType: 'json',
+                contentType: 'application/json',
                 success: function (data) {
-                    let productos="";
+                    listaProductos = data;
+                    let productos = "";
                     for (i = 0; i < data.length; i++) {
                         let producto = `<tr>
-                            <td>${data[i].referencia}</td>
+                            <td><label onclick="seleccionarProducto(${data[i].referencia})"><u style='color:blue'>${data[i].referencia}</u></label></td>
                             <td>${data[i].marca}</td>
                             <td>${data[i].disponibilidad}</td>
                             <td>${data[i].precio}</td>
                             <td>${data[i].cantidad}</td>
                             </tr>`
-                            productos = productos + producto
+                        productos = productos + producto
                     }
-                    document.getElementById("tablaProductos").innerHTML= productos
+                    document.getElementById("tablaProductos").innerHTML = productos
                 }
             });
         }
@@ -86,38 +141,54 @@
 
 <body onload="traerProductos()">
     <div class="form">
-        <div class="container">
-            <div class="form-group">
-                <label>referencia</label>
-                <input type="text" id="referencia" class="form-control" />
+        <form>
+            <div class="container">
+                <div class="form-group">
+                    <label>referencia</label>
+                    <input type="text" id="referencia" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>marca</label>
+                    <select id="marca" class="form-control" required>
+                        <option></option>
+                        <option>JGB</option>
+                        <option>PYG</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>disponibilidad</label>
+                    <select id="disponibilidad" class="form-control" required>
+                        <option></option>
+                        <option>SI</option>
+                        <option>NO</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>precio</label>
+                    <input type="number" id="precio" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>cantidad</label>
+                    <input type="number" id="cantidad" class="form-control" required />
+                </div>
+                <div>
+                    <button id="botonAgregar" class="btn btn-primary" onclick="guardarProducto()">Agregar nuevo
+                        producto</button>
+                </div>
+                <div class="form-group">
+                    <button id="botonEliminar" onclick="eliminarProducto()" class="btn btn-primary">Eliminar
+                        producto</button>
+                    <button id="botonActualizar" onclick="actualizarProducto()" class="btn btn-primary">Actualizar
+                        producto</button>
+                </div>
             </div>
-            <div class="form-group">
-                <label>marca</label>
-                <input type="text" id="marca" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>disponibilidad</label>
-                <select id="disponibilidad" class="form-control">
-                    <option>SI</option>
-                    <option>NO</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>precio</label>
-                <input type="number" id="precio" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>cantidad</label>
-                <input type="number" id="cantidad" class="form-control" />
-            </div>
-            <button id="boton" class="btn btn-primary" onclick="guardarProducto()">Agregar nuevo producto</button>
-        </div>
+        </form>
     </div>
 
     <div id="productos">
         <table class="table">
             <thead>
-                <th>Referencia</th>
+                <th>Referencia </th>
                 <th>Marca</th>
                 <th>Disponibilidad</th>
                 <th>Precio</th>
